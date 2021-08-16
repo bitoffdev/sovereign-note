@@ -99,13 +99,16 @@ def joplin_create_tag(id: str, name: str) -> ParsedJoplinNote:
             "type_": JoplinModelType.Tag.value,
         }
     )
-def joplin_create_notetag(name: str) -> ParsedJoplinNote:
+
+
+def joplin_create_notetag(id: str, note_id: str, tag_id: str) -> ParsedJoplinNote:
     return ParsedJoplinNote(
         body = '',
         headers = {
-            "id": "8ae6c6c757d84a3f8f8db99e1bd99f22",
-            "node_id": "d1da2d486ed44e528281bd499ecf57b6",
-            "tag_id": "96a946e62c8e455398fe1282c2cb6282",
+            "id": id,
+            # "node_id": "d1da2d486ed44e528281bd499ecf57b6",
+            "note_id": note_id,
+            "tag_id": tag_id,
             "created_time": "2021-08-07T14:51:30.227Z",
             "updated_time": "2021-08-07T14:51:30.227Z",
             "user_created_time": "2021-08-07T14:51:30.227Z",

@@ -1,4 +1,5 @@
 import re
+import mimetypes
 import tempfile
 import uuid
 
@@ -35,7 +36,9 @@ def boostnote_to_joplin_id(boostnote_id: str):
 
 
 def replace_boostnote_links_with_joplin_links(
-    content: str, map_boostnote_to_joplin: dict
+    content: str,
+    map_boostnote_to_joplin: dict,
+    map_boostnote_attachment_to_joplin_id: dict,
 ) -> str:
     def get_replacement(m: re.Match) -> str:
         boostnote_id = m.group(2)
@@ -47,8 +50,27 @@ def replace_boostnote_links_with_joplin_links(
         print(f"Replaced link: {repl}")
         return repl
 
+    def get_storage_replacement(m: re.Match) -> str:
+        boost_note_id = m.group(2)
+        boost_filename = m.group(3)
+        attachment = boostnote.BoostnoteAttachment(boost_note_id, boost_filename)
+        joplin_id = map_boostnote_attachment_to_joplin_id.get(attachment)
+        if joplin_id is None:
+            print(f"Could not find replacement attachment for {joplin_id}")
+            return m.group(0)
+        repl = f"[{m.group(1)}](:/{joplin_id})"
+        print(f"Replaced attachment: {repl}")
+        return repl
+
+    # first, replace links to other notes
     prog = re.compile(r"\[([^\]]*)\]\(:note:([^\)]*)\)")
-    return prog.sub(get_replacement, content)
+    content = prog.sub(get_replacement, content)
+
+    # second, replace storage "links"
+    storage_prog = re.compile(r"\[([^\]]*)\]\(:storage\/([^\)\/]*)\/([^\)\/]*)\)")
+    content = storage_prog.sub(get_storage_replacement, content)
+
+    return content
 
 
 col = boostnote.BoostnoteCollection.from_dir("/data/offline/notes")
@@ -73,6 +95,23 @@ for tag_name in col.list_tags():
     store.write(f"{tag_id}.md", payload)
 
 
+# create resources
+boostnote_attachments = list(col.get_attachments())
+map_boostnote_attachment_to_joplin_id = {}
+for attachment in col.get_attachments():
+    attachment_id = joplin_uuid()
+    map_boostnote_attachment_to_joplin_id[attachment] = attachment_id
+    print(f"Writing attachment meta to Joplin store: {attachment}")
+    joplin_resource = joplin.joplin_create_resource(attachment_id, attachment.filename)
+    payload = joplin.unparse_joplin_note(joplin_resource)
+    store.write(f"{attachment_id}.md", payload)
+
+    print(f"Writing attachment blob to Joplin store: {attachment}")
+    ext = attachment.filename.rsplit(".", 1)[-1]
+    store.write_bin(f"resources/{attachment_id}.{ext}", col.read_attachment(attachment))
+
+
+# create Joplin-accepted IDs for all boostnote notes
 boostnote_entities = list(col.get_entities())
 map_boostnote_to_joplin = {}
 for e in boostnote_entities:
@@ -90,7 +129,9 @@ for boostnote_entity in boostnote_entities:
         boostnote_entity.id,
         boostnote_entity.title,
         replace_boostnote_links_with_joplin_links(
-            boostnote_entity.content, map_boostnote_to_joplin
+            boostnote_entity.content,
+            map_boostnote_to_joplin,
+            map_boostnote_attachment_to_joplin_id,
         ),
         boostnote_entity.folder_id,
         boostnote_entity.created_at,

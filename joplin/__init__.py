@@ -39,6 +39,10 @@ class JoplinModelType(enum.Enum):
     Command = 16
 
 
+def _parse_model_type(text: str) -> JoplinModelType:
+    return JoplinModelType(int(text))
+
+
 class ParsedJoplinNote(NamedTuple):
     body: str
     headers: dict
@@ -46,6 +50,13 @@ class ParsedJoplinNote(NamedTuple):
     @property
     def model_type(self) -> JoplinModelType:
         return JoplinModelType(int(self.headers["type_"]))
+
+
+class JoplinFolder(ParsedJoplinNote):
+    @property
+    def name(self):
+        """Get the folder name"""
+        return self.body
 
 
 def parse_joplin_note(content: str) -> ParsedJoplinNote:
@@ -58,6 +69,10 @@ def parse_joplin_note(content: str) -> ParsedJoplinNote:
     headers = {
         k: v.strip() for k, v in (row.split(":", 1) for row in raw_headers.split("\n"))
     }
+    model_type = _parse_model_type(headers["type_"])
+    # TODO If and only if the model type is 'Note', then we also need to parse out the title
+    if model_type == JoplinModelType.Folder:
+        return JoplinFolder(body=raw_body, headers=headers)
     return ParsedJoplinNote(body=raw_body, headers=headers)
 
 

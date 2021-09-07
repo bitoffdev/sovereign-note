@@ -1,4 +1,5 @@
 from collections import Counter
+from contextlib import suppress
 from dataclasses import dataclass
 import datetime
 import enum
@@ -61,6 +62,15 @@ class BoostnoteAttachment:
 class BoostnoteMeta:
     """Reads Boostnote collection metadata from a `boostnote.json` file."""
 
+    DEFAULT_VERSION = "1.0"
+
+    @classmethod
+    def create(cls):
+        """Create a new metadata object"""
+        self = cls()
+        self.data = {"version": cls.DEFAULT_VERSION, "folders": []}
+        return self
+
     @classmethod
     def from_file(cls, filepath):
         with open(filepath) as fh:
@@ -69,11 +79,19 @@ class BoostnoteMeta:
         self.data = data
         return self
 
+    def write_to_file(self, filepath):
+        with open(filepath, "w") as fh:
+            json.dump(self.data, fh)
+
     @property
     def version(self):
         return self.data["version"]
 
-    def get_folder_name(self, folder_id: str):
+    @version.setter
+    def version(self, value: str):
+        self.data["version"] = value
+
+    def get_folder_name(self, folder_id: str) -> str:
         return next(filter(lambda row: row["key"] == folder_id, self.data["folders"]))[
             "name"
         ]
@@ -81,14 +99,47 @@ class BoostnoteMeta:
     def list_folder_ids(self) -> List[str]:
         return [folder["key"] for folder in self.data["folders"]]
 
+    def add_folder(self, key: str, color: str, name: str):
+        self.data["folders"].append({"key": key, "color": color, "name": name})
+
 
 class BoostnoteCollection:
+    @classmethod
+    def create(cls, dir_path: str):
+        """Create a new boostnote collection
+
+        This should yield an error if the dir_path already exists and is not empty.
+        """
+        self = cls()
+        self.dir_path = dir_path
+        self.meta = BoostnoteMeta.create()
+        return self
+
     @classmethod
     def from_dir(cls, dir_path: str):
         self = cls()
         self.dir_path = dir_path
         self.meta = BoostnoteMeta.from_file(os.path.join(dir_path, "boostnote.json"))
         return self
+
+    @staticmethod
+    def _serialize_entity(entity: BoostnoteEntity) -> dict:
+        return {
+            "type": BoostnoteEntityType.MARKDOWN_NOTE.value,
+            "id": entity.id,
+            "createdAt": datetime.datetime.strftime(
+                entity.created_at, BOOSTNOTE_DATE_FORMAT
+            ),
+            "updatedAt": datetime.datetime.strftime(
+                entity.created_at, BOOSTNOTE_DATE_FORMAT
+            ),
+            "folder": entity.folder_id,
+            "title": entity.title,
+            "tags": entity.tags,
+            "content": entity.content,
+            "isStarred": entity.is_starred,
+            "isTrashed": entity.is_trashed,
+        }
 
     @staticmethod
     def _marshal_entity(id: str, dat: dict) -> BoostnoteEntity:
@@ -133,6 +184,7 @@ class BoostnoteCollection:
         return list(map(lambda f: os.path.join(notes_dir, f), os.listdir(notes_dir)))
 
     def get_entities(self) -> Iterator[BoostnoteEntity]:
+        """Get all entities (ie. notes and code snippets) for this collection"""
         for note_path in self.get_entity_paths():
             try:
                 note_id = os.path.basename(note_path).rsplit(".", 1)[0]
@@ -145,6 +197,14 @@ class BoostnoteCollection:
                 print(exc)
                 traceback.print_exc()
                 print(f"Bad note: {note_path}")
+
+    def add_entity(self, entity: BoostnoteEntity):
+        notes_dir = os.path.join(self.dir_path, "notes")
+        with suppress(FileExistsError):
+            os.mkdir(notes_dir)
+        note_path = os.path.join(notes_dir, f"{entity.id}.cson")
+        with open(note_path, "w") as fh:
+            cson.dump(self._serialize_entity(entity), fh)
 
     def get_attachments(self) -> Iterator[BoostnoteAttachment]:
         attachments_path = os.path.join(self.dir_path, "attachments")

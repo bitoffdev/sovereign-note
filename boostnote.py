@@ -7,6 +7,7 @@ import json
 import traceback
 from typing import Dict, Iterator, List, Set
 import os
+import pathlib
 
 import cson
 
@@ -213,6 +214,20 @@ class BoostnoteCollection:
         note_path = os.path.join(notes_dir, f"{entity.id}.cson")
         with open(note_path, "w") as fh:
             cson.dump(self._serialize_entity(entity), fh)
+
+    @property
+    def _attachments_path(self):
+        return os.path.join(self.dir_path, "attachments")
+
+    def add_attachment(self, relpath: str, data: bytes):
+        """
+        :param relpath: Path relative to the attachments directory
+        :param fh: File handle to read data from
+        """
+        attachment_path = os.path.join(self._attachments_path, relpath)
+        pathlib.Path(attachment_path).parent.mkdir(parents=True, exist_ok=True)
+        with open(attachment_path, "wb") as write_fh:
+            write_fh.write(data)
 
     def get_attachments(self) -> Iterator[BoostnoteAttachment]:
         attachments_path = os.path.join(self.dir_path, "attachments")

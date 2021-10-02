@@ -33,6 +33,9 @@ def main(jex_path: str):
     print("Copying notes")
     for p in store.list():
         joplin_entity = joplin.parse_joplin_note(store.read(p))
+        #
+        # Notes
+        #
         if joplin_entity.model_type == joplin.JoplinModelType.Note:
             print(f"Adding note with id '{joplin_entity.headers['id']}'")
             boost_entity = boostnote.BoostnoteNote(
@@ -51,6 +54,16 @@ def main(jex_path: str):
                 content=joplin_entity.body.split("\n\n", 1)[-1],
             )
             col.add_entity(boost_entity)
+        #
+        # Resources
+        #
+        elif isinstance(joplin_entity, joplin.JoplinResource):
+            print(f"Adding resource with id '{joplin_entity.headers['id']}'")
+            col.add_attachment(
+                os.path.join(joplin_entity.id, joplin_entity.basename),
+                store.read_resource_bin(joplin_entity)
+            )
+
     print(f"Finished building boostnote collection at path: '{col.dir_path}'")
 
 

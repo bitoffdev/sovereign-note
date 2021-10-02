@@ -51,12 +51,31 @@ class ParsedJoplinNote(NamedTuple):
     def model_type(self) -> JoplinModelType:
         return JoplinModelType(int(self.headers["type_"]))
 
+    @property
+    def id(self) -> str:
+        return self.headers["id"]
+
 
 class JoplinFolder(ParsedJoplinNote):
     @property
     def name(self):
         """Get the folder name"""
         return self.body
+
+
+class JoplinResource(ParsedJoplinNote):
+    """Images, etc."""
+    @property
+    def basename(self):
+        """
+        Get the virtual 'basename' of the attachment file. This doesn't
+        correspond to the name on disk, but rather the name of the file when it
+        was added to Joplin.
+        """
+        return self.body
+    @property
+    def ext(self):
+        return self.headers['file_extension']
 
 
 def parse_joplin_note(content: str) -> ParsedJoplinNote:
@@ -73,6 +92,8 @@ def parse_joplin_note(content: str) -> ParsedJoplinNote:
     # TODO If and only if the model type is 'Note', then we also need to parse out the title
     if model_type == JoplinModelType.Folder:
         return JoplinFolder(body=raw_body, headers=headers)
+    elif model_type == JoplinModelType.Resource:
+        return JoplinResource(body=raw_body, headers=headers)
     return ParsedJoplinNote(body=raw_body, headers=headers)
 
 
@@ -213,7 +234,11 @@ class Store(abc.ABC):
         pass
 
     @abc.abstractmethod
-    def read(self, relative_path: str):
+    def read_bin(self, relative_path: str) -> bytes:
+        pass
+
+    @abc.abstractmethod
+    def read(self, relative_path: str) -> str:
         pass
 
     @abc.abstractmethod
@@ -223,6 +248,9 @@ class Store(abc.ABC):
     @abc.abstractmethod
     def write_bin(self, relative_path: str, contents: bytes):
         pass
+
+    def read_resource_bin(self, resource: JoplinResource):
+        return self.read_bin(os.path.join("resources", f"{resource.id}.{resource.ext}"))
 
 
 class JoplinRawStore(Store):
@@ -235,6 +263,10 @@ class JoplinRawStore(Store):
             for p in os.listdir(os.path.join(self._path, relative_path))
             if os.path.isfile(p)
         ]
+
+    def read_bin(self, relative_path):
+        with open(os.path.join(self._path, relative_path), "rb") as fh:
+            return fh.read()
 
     def read(self, relative_path):
         with open(os.path.join(self._path, relative_path)) as fh:
@@ -273,12 +305,15 @@ class JoplinTarStore(Store):
         arc.close()
         return names
 
-    def read(self, relative_path: str) -> str:
+    def read_bin(self, relative_path: str) -> bytes:
         arc = tarfile.TarFile(self._tar_path, mode="r")
         with arc.extractfile(relative_path) as fh:
-            contents = fh.read().decode("utf-8")
+            contents = fh.read()
         arc.close()
         return contents
+
+    def read(self, relative_path: str) -> str:
+        return self.read_bin(relative_path).decode("utf-8")
 
     def write(self, relative_path: str, contents: str):
         # create a bytes IO object and calculate its size

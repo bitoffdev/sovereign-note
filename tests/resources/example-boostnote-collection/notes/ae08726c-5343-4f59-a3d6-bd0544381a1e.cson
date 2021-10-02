@@ -1,0 +1,16 @@
+createdAt: "2021-10-02T16:38:20.381Z"
+updatedAt: "2021-10-02T16:39:17.579Z"
+type: "MARKDOWN_NOTE"
+folder: "9f132269d958068b11e0"
+title: "My First Note"
+tags: []
+content: '''
+  # My First Note
+  
+  ## References
+  
+  - [My First Note](:note:ae08726c-5343-4f59-a3d6-bd0544381a1e)
+  - [My Second Note](:note:d70facf2-3fba-46e8-a172-02a7be3742c7)
+'''
+isStarred: false
+isTrashed: false

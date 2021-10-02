@@ -1,0 +1,20 @@
+{
+  "folders": [
+    {
+      "key": "9f132269d958068b11e0",
+      "color": "#3FD941",
+      "name": "Folder One"
+    },
+    {
+      "key": "994f8d784b2b3fc2cd04",
+      "color": "#30D5C8",
+      "name": "Folder Two"
+    },
+    {
+      "key": "0e1fe57d81ff26afea38",
+      "color": "#E8D252",
+      "name": "Special 123 !@#$%^&*()_+-=`~ Folder"
+    }
+  ],
+  "version": "1.0"
+}

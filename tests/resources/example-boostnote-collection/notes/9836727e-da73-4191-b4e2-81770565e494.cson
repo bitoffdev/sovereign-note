@@ -1,0 +1,35 @@
+createdAt: "2021-10-02T16:39:32.481Z"
+updatedAt: "2021-10-02T16:48:50.773Z"
+type: "MARKDOWN_NOTE"
+folder: "0e1fe57d81ff26afea38"
+title: "Special Note"
+tags: []
+content: '''
+  # Special Note
+  
+  ## Sample Python
+  
+  ```python
+  def example_code(x: str) -> None:
+      print(x)
+      return None
+  ```
+  
+  ## Sample Math
+  
+  $$ x = 5 $$
+  
+  $$
+  \\delta \\epsilon x = 7
+  $$
+  
+  ## Sample SVG
+  
+  ![oc_boxes.svg](:storage/9836727e-da73-4191-b4e2-81770565e494/25c981e1.svg)
+  
+  ## Sample PNG
+  
+  ![oc_boxes.png](:storage/9836727e-da73-4191-b4e2-81770565e494/6ea0d43d.png)
+'''
+isStarred: false
+isTrashed: false

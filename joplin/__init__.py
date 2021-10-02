@@ -324,18 +324,3 @@ def store_get_stats(store: Store) -> Counter[JoplinModelType]:
     return c
 
 
-def install_parser(parser: argparse.ArgumentParser) -> None:
-    pass
-
-
-def main():
-    parser = argparse.ArgumentParser()
-    install_parser(parser)
-    parser.parse_args()
-
-    s = JoplinRawStore(".")
-    print(store_get_stats(s))
-
-
-if __name__ == "__main__":
-    main()

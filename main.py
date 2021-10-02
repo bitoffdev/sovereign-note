@@ -1,14 +1,11 @@
 import argparse
 
-from boostnote import BoostnoteCollection
-
-
-def boostnote_stats(args):
-    col = BoostnoteCollection.from_dir(args.path)
-    print(col.stats())
-
 
 def argparse_install_boostnote_stats(parser: argparse.ArgumentParser):
+    parser.add_argument("path")
+
+
+def argparse_install_jexstats(parser: argparse.ArgumentParser):
     parser.add_argument("path")
 
 
@@ -24,8 +21,11 @@ def main():
     parser = argparse.ArgumentParser()
     subparsers = parser.add_subparsers(dest="cmd")
 
-    boostnote_stats_parser = subparsers.add_parser("boostnote-stats")
+    boostnote_stats_parser = subparsers.add_parser("booststats")
     argparse_install_boostnote_stats(boostnote_stats_parser)
+
+    jexstats_parser = subparsers.add_parser("jexstats")
+    argparse_install_jexstats(jexstats_parser)
 
     boost2jex_parser = subparsers.add_parser("boost2jex")
     argparse_install_boost2jex(boost2jex_parser)
@@ -35,8 +35,14 @@ def main():
 
     args = parser.parse_args()
 
-    if args.cmd == "boostnote-stats":
-        boostnote_stats(args)
+    if args.cmd == "booststats":
+        from boostnote import BoostnoteCollection
+        col = BoostnoteCollection.from_dir(args.path)
+        print(col.stats())
+    elif args.cmd == "jexstats":
+        from joplin import JoplinTarStore, store_get_stats
+        col = JoplinTarStore(args.path)
+        print(store_get_stats(col))
     elif args.cmd == "boost2jex":
         import convert_boostnote_to_jex as boost2jex
         boost2jex.main(args.path)

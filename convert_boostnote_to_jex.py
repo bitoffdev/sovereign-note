@@ -52,9 +52,8 @@ def replace_boostnote_links_with_joplin_links(
         return repl
 
     def get_storage_replacement(m: re.Match) -> str:
-        boost_note_id = m.group(2)
-        boost_filename = m.group(3)
-        attachment = boostnote.BoostnoteAttachment(boost_note_id, boost_filename)
+        attachment_relpath = m.group(2)
+        attachment = boostnote.BoostnoteAttachment(attachment_relpath)
         joplin_id = map_boostnote_attachment_to_joplin_id.get(attachment)
         if joplin_id is None:
             print(f"Could not find replacement attachment for {joplin_id}")
@@ -68,7 +67,7 @@ def replace_boostnote_links_with_joplin_links(
     content = prog.sub(get_replacement, content)
 
     # second, replace storage "links"
-    storage_prog = re.compile(r"\[([^\]]*)\]\(:storage\/([^\)\/]*)\/([^\)\/]*)\)")
+    storage_prog = re.compile(r"\[([^\]]*)\]\(:storage\/([^\)]*)\)")
     content = storage_prog.sub(get_storage_replacement, content)
 
     return content

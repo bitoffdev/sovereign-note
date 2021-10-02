@@ -10,6 +10,8 @@ import os
 
 import cson
 
+from util import get_child_paths
+
 BOOSTNOTE_DATE_FORMAT = "%Y-%m-%dT%H:%M:%S.%f%z"
 
 
@@ -47,8 +49,14 @@ class BoostnoteSnippet(BoostnoteEntity):
 
 @dataclass
 class BoostnoteAttachment:
-    note_id: str
-    filename: str
+    """
+    relative_path: path within the attachments directory
+    """
+    relative_path: str
+
+    @property
+    def filename(self):
+        return os.path.basename(self.relative_path)
 
     def __hash__(self):
         # From Python documentation: The only required property is that objects
@@ -56,7 +64,7 @@ class BoostnoteAttachment:
         # together the hash values of the components of the object that also
         # play a part in comparison of objects by packing them into a tuple and
         # hashing the tuple.
-        return hash((self.note_id, self.filename))
+        return hash(self.relative_path)
 
 
 class BoostnoteMeta:
@@ -208,13 +216,12 @@ class BoostnoteCollection:
 
     def get_attachments(self) -> Iterator[BoostnoteAttachment]:
         attachments_path = os.path.join(self.dir_path, "attachments")
-        for note_dir in os.listdir(attachments_path):
-            for filename in os.listdir(os.path.join(attachments_path, note_dir)):
-                yield BoostnoteAttachment(note_dir, filename)
+        for note_relpath in get_child_paths(attachments_path):
+            yield BoostnoteAttachment(note_relpath)
 
-    def read_attachment(self, a):
+    def read_attachment(self, a: BoostnoteAttachment):
         with open(
-            os.path.join(self.dir_path, "attachments", a.note_id, a.filename), "rb"
+            os.path.join(self.dir_path, "attachments", a.relative_path), "rb"
         ) as fh:
             return fh.read()
 

@@ -3,9 +3,39 @@ import datetime
 import os
 import sys
 import tempfile
+import re
 
 import boostnote
 import joplin
+
+
+def replace_links(
+    content: str,
+    store
+) -> str:
+    def get_replacement(m: re.Match) -> str:
+        link_text = m.group(1)
+        joplin_id = m.group(2)
+
+        # handle resources
+        joplin_entity = store.get_note_by_id(joplin_id)
+        if isinstance(joplin_entity, joplin.JoplinResource):
+            attachment_relpath = os.path.join(joplin_entity.id, joplin_entity.basename)
+            repl = f"[{link_text}](:storage/{attachment_relpath})"
+            print(f"Replaced attachment: {repl}")
+        elif isinstance(joplin_entity, joplin.ParsedJoplinNote):
+            repl = f"[{link_text}](:note:{joplin_id})"
+            print(f"Replaced link: {repl}")
+
+        else:
+            raise Exception("Failed to process link")
+
+        return repl
+
+    prog = re.compile(r"\[([^\]]*)\]\(:\/([^\)]*)\)")
+    content = prog.sub(get_replacement, content)
+
+    return content
 
 
 def main(jex_path: str):
@@ -51,7 +81,7 @@ def main(jex_path: str):
                 tags=[],
                 is_starred=False,
                 is_trashed=False,
-                content=joplin_entity.body.split("\n\n", 1)[-1],
+                content=replace_links(joplin_entity.body.split("\n\n", 1)[-1], store),
             )
             col.add_entity(boost_entity)
         #

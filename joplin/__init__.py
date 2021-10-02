@@ -249,8 +249,15 @@ class Store(abc.ABC):
     def write_bin(self, relative_path: str, contents: bytes):
         pass
 
+    #
+    # Some porcelain methods
+    #
+
     def read_resource_bin(self, resource: JoplinResource):
         return self.read_bin(os.path.join("resources", f"{resource.id}.{resource.ext}"))
+
+    def get_note_by_id(self, joplin_id: str) -> ParsedJoplinNote:
+        return parse_joplin_note(self.read(f"{joplin_id}.md"))
 
 
 class JoplinRawStore(Store):

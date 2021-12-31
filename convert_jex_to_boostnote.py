@@ -3,10 +3,28 @@ import datetime
 import os
 import sys
 import tempfile
+from typing import Optional
+import logging
 import re
 
 import boostnote
 import joplin
+
+logger = logging.getLogger(__name__)
+
+
+UUID_CHARSET_WITHOUT_DASHES = "0123456789abcdefABCDEF"
+
+
+def convert_id_from_joplin_to_boostnote(joplin_id: str) -> str:
+    """
+    Recent versions of legacy boostnote generate UUIDs by default, though just
+    about anything can be used as an ID for backwards compatibility.
+    """
+    if len(joplin_id) == 32 and all(c in UUID_CHARSET_WITHOUT_DASHES for c in joplin_id):
+        return f"{joplin_id[:8]}-{joplin_id[8:12]}-{joplin_id[12:16]}-{joplin_id[16:20]}-{joplin_id[20:]}"
+    logger.warn("Could not map Joplin ID to UUID. The Joplin ID will be used as-is.")
+    return joplin_id
 
 
 def replace_links(
@@ -19,12 +37,13 @@ def replace_links(
 
         # handle resources
         joplin_entity = store.get_note_by_id(joplin_id)
+        boostnote_entity_id = convert_id_from_joplin_to_boostnote(joplin_entity.headers['id'])
         if isinstance(joplin_entity, joplin.JoplinResource):
             attachment_relpath = os.path.join(joplin_entity.id, joplin_entity.basename)
             repl = f"[{link_text}](:storage/{attachment_relpath})"
             print(f"Replaced attachment: {repl}")
         elif isinstance(joplin_entity, joplin.ParsedJoplinNote):
-            repl = f"[{link_text}](:note:{joplin_id})"
+            repl = f"[{link_text}](:note:{boostnote_entity_id})"
             print(f"Replaced link: {repl}")
 
         else:
@@ -63,13 +82,14 @@ def main(jex_path: str):
     print("Copying notes")
     for p in store.list():
         joplin_entity = joplin.parse_joplin_note(store.read(p))
+        boostnote_entity_id = convert_id_from_joplin_to_boostnote(joplin_entity.headers['id'])
         #
         # Notes
         #
         if joplin_entity.model_type == joplin.JoplinModelType.Note:
-            print(f"Adding note with id '{joplin_entity.headers['id']}'")
+            print(f"Adding note with id '{boostnote_entity_id}'")
             boost_entity = boostnote.BoostnoteNote(
-                id=joplin_entity.headers["id"],
+                id=boostnote_entity_id,
                 created_at=datetime.datetime.strptime(
                     joplin_entity.headers["created_time"], joplin.JOPLIN_DATE_FORMAT
                 ),

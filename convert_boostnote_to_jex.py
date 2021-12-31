@@ -2,6 +2,7 @@ import re
 import sys
 import mimetypes
 import tempfile
+from typing import Optional
 import uuid
 
 import boostnote
@@ -73,9 +74,10 @@ def replace_boostnote_links_with_joplin_links(
     return content
 
 
-def main(boost_dir_path: str):
+def main(boost_dir_path: str, output_location: Optional[str]=None):
     col = boostnote.BoostnoteCollection.from_dir(boost_dir_path)
-    output_location = tempfile.mktemp(suffix=".jex")
+    if not output_location:
+        output_location = tempfile.mktemp(suffix=".jex")
     store = joplin.JoplinTarStore(output_location)
     for folder_id in col.meta.list_folder_ids():
         folder_name = col.meta.get_folder_name(folder_id)

@@ -57,10 +57,12 @@ def replace_links(
     return content
 
 
-def main(jex_path: str):
+def main(jex_path: str, output_location: Optional[str]=None):
     store = joplin.JoplinTarStore(jex_path)
+    if not output_location:
+        output_location = tempfile.mkdtemp()
 
-    col = boostnote.BoostnoteCollection.create(tempfile.mkdtemp())
+    col = boostnote.BoostnoteCollection.create(output_location)
     print(f"Building boostnote collection at path: '{col.dir_path}'")
 
     #

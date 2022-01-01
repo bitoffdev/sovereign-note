@@ -5,8 +5,8 @@ import tempfile
 from typing import Optional
 import uuid
 
-import boostnote
-import joplin
+from . import boostnote
+from . import joplin
 
 
 def joplin_uuid() -> str:

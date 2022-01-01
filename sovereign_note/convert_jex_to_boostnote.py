@@ -7,8 +7,24 @@ from typing import Optional
 import logging
 import re
 
-import boostnote
-import joplin
+from . import boostnote
+from . import joplin
+
+logger = logging.getLogger(__name__)
+
+
+UUID_CHARSET_WITHOUT_DASHES = "0123456789abcdefABCDEF"
+
+
+def convert_id_from_joplin_to_boostnote(joplin_id: str) -> str:
+    """
+    Recent versions of legacy boostnote generate UUIDs by default, though just
+    about anything can be used as an ID for backwards compatibility.
+    """
+    if len(joplin_id) == 32 and all(c in UUID_CHARSET_WITHOUT_DASHES for c in joplin_id):
+        return f"{joplin_id[:8]}-{joplin_id[8:12]}-{joplin_id[12:16]}-{joplin_id[16:20]}-{joplin_id[20:]}"
+    logger.warn("Could not map Joplin ID to UUID. The Joplin ID will be used as-is.")
+    return joplin_id
 
 logger = logging.getLogger(__name__)
 

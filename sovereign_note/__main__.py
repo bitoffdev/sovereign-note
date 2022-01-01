@@ -1,4 +1,12 @@
 import argparse
+import logging
+
+from .boostnote import BoostnoteCollection
+from .joplin import JoplinTarStore, store_get_stats
+from . import convert_boostnote_to_jex as boost2jex
+from . import convert_jex_to_boostnote as jex2boost
+
+logger = logging.getLogger(__name__)
 
 
 def argparse_install_boostnote_stats(parser: argparse.ArgumentParser):
@@ -36,18 +44,14 @@ def main():
     args = parser.parse_args()
 
     if args.cmd == "booststats":
-        from boostnote import BoostnoteCollection
         col = BoostnoteCollection.from_dir(args.path)
         print(col.stats())
     elif args.cmd == "jexstats":
-        from joplin import JoplinTarStore, store_get_stats
         col = JoplinTarStore(args.path)
         print(store_get_stats(col))
     elif args.cmd == "boost2jex":
-        import convert_boostnote_to_jex as boost2jex
         boost2jex.main(args.path)
     elif args.cmd == "jex2boost":
-        import convert_jex_to_boostnote as jex2boost
         jex2boost.main(args.path)
     else:
         parser.print_help()

@@ -11,9 +11,21 @@ import pathlib
 
 import cson
 
-from util import get_child_paths
+from ..util import get_child_paths
 
 BOOSTNOTE_DATE_FORMAT = "%Y-%m-%dT%H:%M:%S.%f%z"
+
+
+def to_utc(dt):
+    if not dt.tzinfo:
+        return dt.replace(tzinfo=datetime.timezone.utc)
+    return (dt - dt.utcoffset()).replace(tzinfo=datetime.timezone.utc)
+
+
+def boostnote_format_date(dt):
+    # XXX In order show milliseconds only, we specify that we want microseconds
+    # (`%f`) and then strip off the last three characters.
+    return to_utc(dt).strftime("%Y-%m-%dT%H:%M:%S.%f")[:-3] + "Z"
 
 
 class BoostnoteEntityType(enum.Enum):
@@ -136,12 +148,8 @@ class BoostnoteCollection:
         return {
             "type": BoostnoteEntityType.MARKDOWN_NOTE.value,
             "id": entity.id,
-            "createdAt": datetime.datetime.strftime(
-                entity.created_at, BOOSTNOTE_DATE_FORMAT
-            ),
-            "updatedAt": datetime.datetime.strftime(
-                entity.created_at, BOOSTNOTE_DATE_FORMAT
-            ),
+            "createdAt": boostnote_format_date(entity.created_at),
+            "updatedAt": boostnote_format_date(entity.updated_at),
             "folder": entity.folder_id,
             "title": entity.title,
             "tags": entity.tags,

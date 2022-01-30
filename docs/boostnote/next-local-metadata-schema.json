@@ -1,0 +1,122 @@
+{
+    "$schema": "http://json-schema.org/draft-04/schema",
+    "title": "Boostnote Collection Metadata File",
+    "description": "Schema for boostnote.json file",
+
+    "type": "object",
+    "required": [
+        "folderMap",
+        "tagMap"
+    ],
+    "properties": {
+        "folderMap": {
+            "type": "object",
+            "patternProperties": {
+                "^.*$": {
+                    "type": "object",
+                    "$ref": "#/definitions/folder"
+                }
+            }
+        },
+        "tagMap": {
+            "type": "object",
+            "patternProperties": {
+                "^.*$": {
+                    "type": "object",
+                    "$ref": "#/definitions/tag"
+                }
+            }
+        }
+    },
+
+    "definitions": {
+        "folder": {
+            "$schema": "http://json-schema.org/draft-04/schema",
+            "title": "Folder",
+            "type": "object",
+            "required": [
+                "_id",
+                "createdAt",
+                "data",
+                "orderId",
+                "orderedIds",
+                "updatedAt"
+            ],
+            "properties": {
+                "_id": {
+                    "type": "string",
+                    "description": "Folder id",
+                    "examples": [
+                        "folder:/",
+                        "folder:/Parent",
+                        "folder:/Parent/Child"
+                    ]
+                },
+                "createdAt": {
+                    "type": "string",
+                    "description": "ISO 8601",
+                    "examples": "2022-02-05T20:50:38.611Z"
+                },
+                "data": {
+                    "type": "object",
+                    "required": []
+                },
+                "orderId": {
+                    "type": "string",
+                    "description": "Randomly generated id for this folder",
+                    "examples": [
+                        "folder:PD-djD04o1",
+                        "folder:AbHlHVwx2h"
+                    ]
+                },
+                "orderedIds": {
+                    "type": "array",
+                    "description": "orderIds of child folders",
+                    "items": {
+                        "anyOf": [
+                            {
+                                "type": "string"
+                            }
+                        ]
+                    }
+                },
+                "updatedAt": {
+                    "type": "string",
+                    "description": "ISO 8601",
+                    "examples": "2022-02-05T20:50:38.611Z"
+                }
+            }
+        },
+        "tag": {
+            "$schema": "http://json-schema.org/draft-04/schema",
+            "title": "Tag",
+
+            "type": "object",
+            "required": [
+                "_id",
+                "createdAt",
+                "data",
+                "updatedAt"
+            ],
+            "properties": {
+                "_id": {
+                    "type": "string"
+                },
+                "createdAt": {
+                    "type": "string",
+                    "description": "ISO 8601",
+                    "examples": "2022-02-05T20:50:38.611Z"
+                },
+                "data": {
+                    "type": "object",
+                    "required": []
+                },
+                "updatedAt": {
+                    "type": "string",
+                    "description": "ISO 8601",
+                    "examples": "2022-02-05T20:50:38.611Z"
+                }
+            }
+        }
+    }
+}

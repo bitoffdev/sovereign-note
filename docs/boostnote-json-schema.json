@@ -1,0 +1,68 @@
+    {
+        "$schema": "http://json-schema.org/draft-04/schema",
+        "title": "Boostnote Collection Metadata File",
+        "description": "Schema for boostnote.json file",
+
+
+        "type": "object",
+        "required": [
+            "folders",
+            "version"
+        ],
+        "properties": {
+            "folders": {
+                "type": "array",
+                "items": {
+                    "$ref": "#/definitions/folder"
+                }
+            },
+            "version": {
+                "type": "string",
+                "description": "In practice, this is always 1.0",
+                "examples": [
+                    "1.0"
+                ]
+            }
+        },
+
+
+        "definitions": {
+            "folder": {
+                "$schema": "http://json-schema.org/draft-04/schema",
+                "type": "object",
+                "required": [
+                    "key",
+                    "color",
+                    "name"
+                ],
+                "properties": {
+                    "key": {
+                        "type": "string",
+                        "examples": [
+                            "9f132269d958068b11e0",
+                            "994f8d784b2b3fc2cd04",
+                            "0e1fe57d81ff26afea38"
+                        ]
+                    },
+                    "color": {
+                        "type": "string",
+                        "examples": [
+                            "#3FD941",
+                            "#30D5C8",
+                            "#E8D252"
+                        ]
+                    },
+                    "name": {
+                        "type": "string",
+                        "examples": [
+                            "Folder One",
+                            "Folder Two",
+                            "Special 123 !@#$%^&*()_+-=`~ Folder"
+                        ]
+                    }
+                }
+            }
+
+
+        }
+    }

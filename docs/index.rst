@@ -7,6 +7,10 @@ Introduction
 The goal of the *Sovereign Note* project is to keep ownership of your notes and
 free yourself from any one particular note-taking application.
 
+**sov·​er·​eign** (*adjective*):
+
+    acting or done independently and without outside interference
+
 Supported Applications
 ^^^^^^^^^^^^^^^^^^^^^^
 
@@ -26,5 +30,5 @@ apps use to store notes.
 .. toctree::
     :maxdepth: 2
 
-    boostnote/legacy
-    boostnote/next-local
+    boostnote/index
+    joplin/index

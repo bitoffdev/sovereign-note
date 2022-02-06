@@ -1,13 +1,15 @@
 #!/usr/bin/env python3
 import abc
-import argparse
-from collections import Counter
 import datetime
 import enum
 import io
 import mimetypes
 import os
 import tarfile
+
+# Note: We need to import Counter from typing rather than collections because
+# in Python versions 3.8 and older, collections.Counter raises a TypeError if
+# you use it as a type hint with an argument, e.g. Counter[str]
 from typing import Counter, Iterator, NamedTuple
 
 JOPLIN_DATE_FORMAT = "%Y-%m-%dT%H:%M:%S.%f%z"
@@ -65,6 +67,7 @@ class JoplinFolder(ParsedJoplinNote):
 
 class JoplinResource(ParsedJoplinNote):
     """Images, etc."""
+
     @property
     def basename(self):
         """
@@ -73,9 +76,10 @@ class JoplinResource(ParsedJoplinNote):
         was added to Joplin.
         """
         return self.body
+
     @property
     def ext(self):
-        return self.headers['file_extension']
+        return self.headers["file_extension"]
 
 
 def parse_joplin_note(content: str) -> ParsedJoplinNote:
@@ -145,7 +149,6 @@ def joplin_create_notetag(id: str, note_id: str, tag_id: str) -> ParsedJoplinNot
         body="",
         headers={
             "id": id,
-            # "node_id": "d1da2d486ed44e528281bd499ecf57b6",
             "note_id": note_id,
             "tag_id": tag_id,
             "created_time": "2021-08-07T14:51:30.227Z",
@@ -156,7 +159,6 @@ def joplin_create_notetag(id: str, note_id: str, tag_id: str) -> ParsedJoplinNot
             "encryption_applied": 0,
             "parent_id": "",
             "is_shared": 0,
-            # "share_id": "",
             "type_": JoplinModelType.NoteTag.value,
         },
     )
@@ -364,5 +366,3 @@ def store_get_stats(store: Store) -> Counter[JoplinModelType]:
         except Exception:
             print(f"Could not parse {p}")
     return c
-
-

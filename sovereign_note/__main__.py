@@ -1,10 +1,10 @@
 import argparse
 import logging
 
-from .boostnote import BoostnoteCollection
-from .joplin import JoplinTarStore, store_get_stats
 from . import convert_boostnote_to_jex as boost2jex
 from . import convert_jex_to_boostnote as jex2boost
+from .boostnote import BoostnoteCollection
+from .joplin import JoplinTarStore, store_get_stats
 
 logger = logging.getLogger(__name__)
 
@@ -59,4 +59,3 @@ def main():
 
 if __name__ == "__main__":
     main()
-

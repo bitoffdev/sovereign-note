@@ -1,13 +1,13 @@
-from collections import Counter
-from contextlib import suppress
-from dataclasses import dataclass
 import datetime
 import enum
 import json
-import traceback
-from typing import Dict, Iterator, List, Set
 import os
 import pathlib
+import traceback
+from collections import Counter
+from contextlib import suppress
+from dataclasses import dataclass
+from typing import Iterator, List, Set
 
 import cson
 
@@ -65,6 +65,7 @@ class BoostnoteAttachment:
     """
     relative_path: path within the attachments directory
     """
+
     relative_path: str
 
     @property

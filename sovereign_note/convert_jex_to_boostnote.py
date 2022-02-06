@@ -1,18 +1,16 @@
 #!/usr/bin/env python3
-from collections import defaultdict
 import datetime
+import logging
 import os
+import re
 import sys
 import tempfile
+from collections import defaultdict
 from typing import Optional, Set
-import logging
-import re
 
-from . import boostnote
-from . import joplin
+from . import boostnote, joplin
 
 logger = logging.getLogger(__name__)
-
 
 UUID_CHARSET_WITHOUT_DASHES = "0123456789abcdefABCDEF"
 
@@ -22,32 +20,15 @@ def convert_id_from_joplin_to_boostnote(joplin_id: str) -> str:
     Recent versions of legacy boostnote generate UUIDs by default, though just
     about anything can be used as an ID for backwards compatibility.
     """
-    if len(joplin_id) == 32 and all(c in UUID_CHARSET_WITHOUT_DASHES for c in joplin_id):
-        return f"{joplin_id[:8]}-{joplin_id[8:12]}-{joplin_id[12:16]}-{joplin_id[16:20]}-{joplin_id[20:]}"
-    logger.warn("Could not map Joplin ID to UUID. The Joplin ID will be used as-is.")
-    return joplin_id
-
-logger = logging.getLogger(__name__)
-
-
-UUID_CHARSET_WITHOUT_DASHES = "0123456789abcdefABCDEF"
-
-
-def convert_id_from_joplin_to_boostnote(joplin_id: str) -> str:
-    """
-    Recent versions of legacy boostnote generate UUIDs by default, though just
-    about anything can be used as an ID for backwards compatibility.
-    """
-    if len(joplin_id) == 32 and all(c in UUID_CHARSET_WITHOUT_DASHES for c in joplin_id):
+    if len(joplin_id) == 32 and all(
+        c in UUID_CHARSET_WITHOUT_DASHES for c in joplin_id
+    ):
         return f"{joplin_id[:8]}-{joplin_id[8:12]}-{joplin_id[12:16]}-{joplin_id[16:20]}-{joplin_id[20:]}"
     logger.warn("Could not map Joplin ID to UUID. The Joplin ID will be used as-is.")
     return joplin_id
 
 
-def find_attachments(
-    content: str,
-    store
-) -> Set[str]:
+def find_attachments(content: str, store) -> Set[str]:
     """Return a list of <Joplin IDs> referencing attachments"""
     prog = re.compile(r"\[[^\]]*\]\(:\/([^\)]*)\)")
     linked_joplin_ids = prog.findall(content)
@@ -71,10 +52,14 @@ def replace_links(
 
         # handle resources
         joplin_entity = store.get_note_by_id(joplin_id)
-        boostnote_entity_id = convert_id_from_joplin_to_boostnote(joplin_entity.headers['id'])
+        boostnote_entity_id = convert_id_from_joplin_to_boostnote(
+            joplin_entity.headers["id"]
+        )
         if isinstance(joplin_entity, joplin.JoplinResource):
             if len(map_attachment_to_notes[joplin_entity.id]) == 1:
-                prefix = convert_id_from_joplin_to_boostnote(next(iter(map_attachment_to_notes[joplin_entity.id])))
+                prefix = convert_id_from_joplin_to_boostnote(
+                    next(iter(map_attachment_to_notes[joplin_entity.id]))
+                )
             else:
                 prefix = joplin_entity.id
             attachment_relpath = os.path.join(prefix, joplin_entity.basename)
@@ -95,7 +80,7 @@ def replace_links(
     return content
 
 
-def main(jex_path: str, output_location: Optional[str]=None):
+def main(jex_path: str, output_location: Optional[str] = None):
     store = joplin.JoplinTarStore(jex_path)
     if not output_location:
         output_location = tempfile.mkdtemp()
@@ -133,7 +118,7 @@ def main(jex_path: str, output_location: Optional[str]=None):
     # attachment.
     map_attachment_to_notes = defaultdict(set)
     for joplin_entity in note_queue:
-        joplin_id = joplin_entity.headers['id']
+        joplin_id = joplin_entity.headers["id"]
         print(f"Searching note with joplin id '{joplin_id}' for attachments")
         content = joplin_entity.body.split("\n\n", 1)[-1]
         for _attach_id in find_attachments(content, store):
@@ -141,7 +126,9 @@ def main(jex_path: str, output_location: Optional[str]=None):
     print(map_attachment_to_notes)
 
     for joplin_entity in note_queue:
-        boostnote_entity_id = convert_id_from_joplin_to_boostnote(joplin_entity.headers['id'])
+        boostnote_entity_id = convert_id_from_joplin_to_boostnote(
+            joplin_entity.headers["id"]
+        )
         print(f"Adding note with id '{boostnote_entity_id}'")
         boost_entity = boostnote.BoostnoteNote(
             id=boostnote_entity_id,
@@ -156,19 +143,23 @@ def main(jex_path: str, output_location: Optional[str]=None):
             tags=[],
             is_starred=False,
             is_trashed=False,
-            content=replace_links(joplin_entity.body.split("\n\n", 1)[-1], store, map_attachment_to_notes),
+            content=replace_links(
+                joplin_entity.body.split("\n\n", 1)[-1], store, map_attachment_to_notes
+            ),
         )
         col.add_entity(boost_entity)
 
     for joplin_entity in resource_queue:
         print(f"Adding resource with id '{joplin_entity.headers['id']}'")
         if len(map_attachment_to_notes[joplin_entity.id]) == 1:
-                prefix = convert_id_from_joplin_to_boostnote(next(iter(map_attachment_to_notes[joplin_entity.id])))
+            prefix = convert_id_from_joplin_to_boostnote(
+                next(iter(map_attachment_to_notes[joplin_entity.id]))
+            )
         else:
             prefix = joplin_entity.id
         col.add_attachment(
             os.path.join(prefix, joplin_entity.basename),
-            store.read_resource_bin(joplin_entity)
+            store.read_resource_bin(joplin_entity),
         )
 
     print(f"Finished building boostnote collection at path: '{col.dir_path}'")

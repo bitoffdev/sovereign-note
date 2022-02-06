@@ -1,19 +1,14 @@
 import re
 import sys
-import mimetypes
 import tempfile
-from typing import Optional
 import uuid
+from typing import Optional
 
-from . import boostnote
-from . import joplin
+from . import boostnote, joplin
 
 
 def joplin_uuid() -> str:
     return str(uuid.uuid4()).replace("-", "")
-
-
-# UUID4_REGEX = "^[0-9a-fA-F]{8}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{12}$"
 
 
 def boostnote_to_joplin_id(boostnote_id: str):
@@ -74,7 +69,7 @@ def replace_boostnote_links_with_joplin_links(
     return content
 
 
-def main(boost_dir_path: str, output_location: Optional[str]=None):
+def main(boost_dir_path: str, output_location: Optional[str] = None):
     col = boostnote.BoostnoteCollection.from_dir(boost_dir_path)
     if not output_location:
         output_location = tempfile.mktemp(suffix=".jex")
@@ -85,8 +80,7 @@ def main(boost_dir_path: str, output_location: Optional[str]=None):
         joplin_entity = joplin.joplin_create_folder(folder_id, folder_name)
         payload = joplin.unparse_joplin_note(joplin_entity)
         store.write(f"{folder_id}.md", payload)
-    
-    
+
     # create tags
     tag_name_to_id = {}
     for tag_name in col.list_tags():
@@ -96,24 +90,25 @@ def main(boost_dir_path: str, output_location: Optional[str]=None):
         joplin_tag = joplin.joplin_create_tag(tag_id, tag_name)
         payload = joplin.unparse_joplin_note(joplin_tag)
         store.write(f"{tag_id}.md", payload)
-    
-    
+
     # create resources
-    boostnote_attachments = list(col.get_attachments())
     map_boostnote_attachment_to_joplin_id = {}
     for attachment in col.get_attachments():
         attachment_id = joplin_uuid()
         map_boostnote_attachment_to_joplin_id[attachment] = attachment_id
         print(f"Writing attachment meta to Joplin store: {attachment}")
-        joplin_resource = joplin.joplin_create_resource(attachment_id, attachment.filename)
+        joplin_resource = joplin.joplin_create_resource(
+            attachment_id, attachment.filename
+        )
         payload = joplin.unparse_joplin_note(joplin_resource)
         store.write(f"{attachment_id}.md", payload)
-    
+
         print(f"Writing attachment blob to Joplin store: {attachment}")
         ext = attachment.filename.rsplit(".", 1)[-1]
-        store.write_bin(f"resources/{attachment_id}.{ext}", col.read_attachment(attachment))
-    
-    
+        store.write_bin(
+            f"resources/{attachment_id}.{ext}", col.read_attachment(attachment)
+        )
+
     # create Joplin-accepted IDs for all boostnote notes
     boostnote_entities = list(col.get_entities())
     map_boostnote_to_joplin = {}
@@ -121,12 +116,12 @@ def main(boost_dir_path: str, output_location: Optional[str]=None):
         new_id = boostnote_to_joplin_id(e.id)
         map_boostnote_to_joplin[e.id] = new_id
         e.id = new_id
-    
+
     # create notes
     for boostnote_entity in boostnote_entities:
         if not isinstance(boostnote_entity, boostnote.BoostnoteNote):
             continue
-    
+
         print(f"Creating Joplin note for Boostnote note with ID {boostnote_entity.id}")
         joplin_entity = joplin.joplin_create_note(
             boostnote_entity.id,
@@ -140,7 +135,6 @@ def main(boost_dir_path: str, output_location: Optional[str]=None):
             boostnote_entity.created_at,
             boostnote_entity.updated_at,
         )
-        # print(joplin_entity.headers)
         payload = joplin.unparse_joplin_note(joplin_entity)
         store.write(f"{boostnote_entity.id}.md", payload)
         # Create entities tagging notes
@@ -154,8 +148,7 @@ def main(boost_dir_path: str, output_location: Optional[str]=None):
                 f"{notetag_id}.md", joplin.unparse_joplin_note(joplin_notetag_entity)
             )
             print(f"Wrote NoteTag with ID {notetag_id}")
-    
-    
+
     print(f"Saved output to {output_location}")
 
 

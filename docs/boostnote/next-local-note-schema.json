@@ -1,0 +1,59 @@
+{
+    "$schema": "http://json-schema.org/draft-04/schema",
+    "title": "Note Schema for Boost Note Next Local",
+    "description": "This is the JSON schema for an individual note within a Boost Note Next Local Space",
+
+    "type": "object",
+    "required": [
+        "_id",
+        "title",
+        "content",
+        "tags",
+        "folderPathname",
+        "data",
+        "createdAt",
+        "updatedAt",
+        "trashed",
+        "_rev"
+    ],
+    "properties": {
+        "_id": {
+            "type": "string"
+        },
+        "title": {
+            "type": "string"
+        },
+        "content": {
+            "type": "string"
+        },
+        "tags": {
+            "type": "array",
+            "items": {
+                "anyOf": [
+                    {
+                        "type": "string"
+                    }
+                ]
+            }
+        },
+        "folderPathname": {
+            "type": "string"
+        },
+        "data": {
+            "type": "object",
+            "required": []
+        },
+        "createdAt": {
+            "type": "string"
+        },
+        "updatedAt": {
+            "type": "string"
+        },
+        "trashed": {
+            "type": "boolean"
+        },
+        "_rev": {
+            "type": "string"
+        }
+    }
+}

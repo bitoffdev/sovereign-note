@@ -1,7 +1,7 @@
 Boost Note Next Local
 =====================
 
-File Heirarchy
+File Hierarchy
 --------------
 
 The Boost Note directory will have one metadata file called "boostnote.json".

@@ -1,0 +1,445 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Boost Note Next Local &mdash; Sovereign Note  documentation</title>
+      <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/doctools.js"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Joplin" href="../joplin/index.html" />
+    <link rel="prev" title="Boost Note Legacy" href="legacy.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="../index.html" class="icon icon-home"> Sovereign Note
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">Boost Note</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="legacy.html">Boost Note Legacy</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Boost Note Next Local</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#file-hierarchy">File Hierarchy</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#boostnote-json-specification">Boostnote.json Specification</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#boostnote-collection-metadata-file">Boostnote Collection Metadata File</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#note-specification">Note Specification</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#note-schema-for-boost-note-next-local">Note Schema for Boost Note Next Local</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../joplin/index.html">Joplin</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../obsidian/index.html">Obsidian</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">Sovereign Note</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
+          <li><a href="index.html">Boost Note</a> &raquo;</li>
+      <li>Boost Note Next Local</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../_sources/boostnote/next-local.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="boost-note-next-local">
+<h1>Boost Note Next Local<a class="headerlink" href="#boost-note-next-local" title="Permalink to this headline"></a></h1>
+<section id="file-hierarchy">
+<h2>File Hierarchy<a class="headerlink" href="#file-hierarchy" title="Permalink to this headline"></a></h2>
+<p>The Boost Note directory will have one metadata file called “boostnote.json”.</p>
+<p>The Boost Note directory will have two subdirectories named “attachments” and “notes”.</p>
+<p>The “notes” directory will contain one JSON file for each note in your collection.</p>
+<p>For example, your Boost Note directory may look like this:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>.
+├── attachments
+│   └── image-kzaa7q90.png
+├── boostnote.json
+└── notes
+    ├── BBJGwkU_K.json
+    ├── -bTIjMLFQZ.json
+    └── LP4IVuuEL.json
+</pre></div>
+</div>
+</section>
+<section id="boostnote-json-specification">
+<h2>Boostnote.json Specification<a class="headerlink" href="#boostnote-json-specification" title="Permalink to this headline"></a></h2>
+<section id="boostnote-collection-metadata-file">
+<span id="boostnote-collection-metadata-file"></span><h3>Boostnote Collection Metadata File<a class="headerlink" href="#boostnote-collection-metadata-file" title="Permalink to this headline"></a></h3>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 25%" />
+<col style="width: 25%" />
+<col style="width: 25%" />
+<col style="width: 25%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td colspan="4"><p>Schema for boostnote.json file</p></td>
+</tr>
+<tr class="row-even"><td><p>type</p></td>
+<td colspan="3"><p><em>object</em></p></td>
+</tr>
+<tr class="row-odd"><td colspan="4"><p>properties</p></td>
+</tr>
+<tr class="row-even"><td rowspan="4"><ul class="simple">
+<li><p><strong>folderMap</strong></p></li>
+</ul>
+</td>
+<td><p>type</p></td>
+<td colspan="2"><p><em>object</em></p></td>
+</tr>
+<tr class="row-odd"><td colspan="3"><p>patternProperties</p></td>
+</tr>
+<tr class="row-even"><td rowspan="2"><ul class="simple">
+<li><p>^.*$</p></li>
+</ul>
+</td>
+<td><p>type</p></td>
+<td><p><em>object</em></p></td>
+</tr>
+<tr class="row-odd"><td colspan="2"><p><a class="reference internal" href="#folder">Folder</a></p></td>
+</tr>
+<tr class="row-even"><td rowspan="4"><ul class="simple">
+<li><p><strong>tagMap</strong></p></li>
+</ul>
+</td>
+<td><p>type</p></td>
+<td colspan="2"><p><em>object</em></p></td>
+</tr>
+<tr class="row-odd"><td colspan="3"><p>patternProperties</p></td>
+</tr>
+<tr class="row-even"><td rowspan="2"><ul class="simple">
+<li><p>^.*$</p></li>
+</ul>
+</td>
+<td><p>type</p></td>
+<td><p><em>object</em></p></td>
+</tr>
+<tr class="row-odd"><td colspan="2"><p><a class="reference internal" href="#tag">Tag</a></p></td>
+</tr>
+</tbody>
+</table>
+<section id="folder">
+<span id="folder"></span><h4>Folder<a class="headerlink" href="#folder" title="Permalink to this headline"></a></h4>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 20%" />
+<col style="width: 20%" />
+<col style="width: 20%" />
+<col style="width: 20%" />
+<col style="width: 20%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p>type</p></td>
+<td colspan="4"><p><em>object</em></p></td>
+</tr>
+<tr class="row-even"><td colspan="5"><p>properties</p></td>
+</tr>
+<tr class="row-odd"><td rowspan="5"><ul class="simple">
+<li><p><strong>_id</strong></p></li>
+</ul>
+</td>
+<td colspan="4"><p>Folder id</p></td>
+</tr>
+<tr class="row-even"><td><p>type</p></td>
+<td colspan="3"><p><em>string</em></p></td>
+</tr>
+<tr class="row-odd"><td rowspan="3"><p>examples</p></td>
+<td colspan="3"><p>folder:/</p></td>
+</tr>
+<tr class="row-even"><td colspan="3"><p>folder:/Parent</p></td>
+</tr>
+<tr class="row-odd"><td colspan="3"><p>folder:/Parent/Child</p></td>
+</tr>
+<tr class="row-even"><td rowspan="3"><ul class="simple">
+<li><p><strong>createdAt</strong></p></li>
+</ul>
+</td>
+<td colspan="4"><p>ISO 8601</p></td>
+</tr>
+<tr class="row-odd"><td><p>type</p></td>
+<td colspan="3"><p><em>string</em></p></td>
+</tr>
+<tr class="row-even"><td><p>examples</p></td>
+<td colspan="3"><p>2022-02-05T20:50:38.611Z</p></td>
+</tr>
+<tr class="row-odd"><td><ul class="simple">
+<li><p><strong>data</strong></p></li>
+</ul>
+</td>
+<td><p>type</p></td>
+<td colspan="3"><p><em>object</em></p></td>
+</tr>
+<tr class="row-even"><td rowspan="4"><ul class="simple">
+<li><p><strong>orderId</strong></p></li>
+</ul>
+</td>
+<td colspan="4"><p>Randomly generated id for this folder</p></td>
+</tr>
+<tr class="row-odd"><td><p>type</p></td>
+<td colspan="3"><p><em>string</em></p></td>
+</tr>
+<tr class="row-even"><td rowspan="2"><p>examples</p></td>
+<td colspan="3"><p>folder:PD-djD04o1</p></td>
+</tr>
+<tr class="row-odd"><td colspan="3"><p>folder:AbHlHVwx2h</p></td>
+</tr>
+<tr class="row-even"><td rowspan="3"><ul class="simple">
+<li><p><strong>orderedIds</strong></p></li>
+</ul>
+</td>
+<td colspan="4"><p>orderIds of child folders</p></td>
+</tr>
+<tr class="row-odd"><td><p>type</p></td>
+<td colspan="3"><p><em>array</em></p></td>
+</tr>
+<tr class="row-even"><td><p>items</p></td>
+<td><p>anyOf</p></td>
+<td><p>type</p></td>
+<td><p><em>string</em></p></td>
+</tr>
+<tr class="row-odd"><td rowspan="3"><ul class="simple">
+<li><p><strong>updatedAt</strong></p></li>
+</ul>
+</td>
+<td colspan="4"><p>ISO 8601</p></td>
+</tr>
+<tr class="row-even"><td><p>type</p></td>
+<td colspan="3"><p><em>string</em></p></td>
+</tr>
+<tr class="row-odd"><td><p>examples</p></td>
+<td colspan="3"><p>2022-02-05T20:50:38.611Z</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="tag">
+<span id="tag"></span><h4>Tag<a class="headerlink" href="#tag" title="Permalink to this headline"></a></h4>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 33%" />
+<col style="width: 33%" />
+<col style="width: 33%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p>type</p></td>
+<td colspan="2"><p><em>object</em></p></td>
+</tr>
+<tr class="row-even"><td colspan="3"><p>properties</p></td>
+</tr>
+<tr class="row-odd"><td><ul class="simple">
+<li><p><strong>_id</strong></p></li>
+</ul>
+</td>
+<td><p>type</p></td>
+<td><p><em>string</em></p></td>
+</tr>
+<tr class="row-even"><td rowspan="3"><ul class="simple">
+<li><p><strong>createdAt</strong></p></li>
+</ul>
+</td>
+<td colspan="2"><p>ISO 8601</p></td>
+</tr>
+<tr class="row-odd"><td><p>type</p></td>
+<td><p><em>string</em></p></td>
+</tr>
+<tr class="row-even"><td><p>examples</p></td>
+<td><p>2022-02-05T20:50:38.611Z</p></td>
+</tr>
+<tr class="row-odd"><td><ul class="simple">
+<li><p><strong>data</strong></p></li>
+</ul>
+</td>
+<td><p>type</p></td>
+<td><p><em>object</em></p></td>
+</tr>
+<tr class="row-even"><td rowspan="3"><ul class="simple">
+<li><p><strong>updatedAt</strong></p></li>
+</ul>
+</td>
+<td colspan="2"><p>ISO 8601</p></td>
+</tr>
+<tr class="row-odd"><td><p>type</p></td>
+<td><p><em>string</em></p></td>
+</tr>
+<tr class="row-even"><td><p>examples</p></td>
+<td><p>2022-02-05T20:50:38.611Z</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+</section>
+</section>
+<section id="note-specification">
+<h2>Note Specification<a class="headerlink" href="#note-specification" title="Permalink to this headline"></a></h2>
+<section id="note-schema-for-boost-note-next-local">
+<span id="note-schema-for-boost-note-next-local"></span><h3>Note Schema for Boost Note Next Local<a class="headerlink" href="#note-schema-for-boost-note-next-local" title="Permalink to this headline"></a></h3>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 20%" />
+<col style="width: 20%" />
+<col style="width: 20%" />
+<col style="width: 20%" />
+<col style="width: 20%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td colspan="5"><p>This is the JSON schema for an individual note within a Boost Note Next Local Space</p></td>
+</tr>
+<tr class="row-even"><td><p>type</p></td>
+<td colspan="4"><p><em>object</em></p></td>
+</tr>
+<tr class="row-odd"><td colspan="5"><p>properties</p></td>
+</tr>
+<tr class="row-even"><td><ul class="simple">
+<li><p><strong>_id</strong></p></li>
+</ul>
+</td>
+<td><p>type</p></td>
+<td colspan="3"><p><em>string</em></p></td>
+</tr>
+<tr class="row-odd"><td><ul class="simple">
+<li><p><strong>title</strong></p></li>
+</ul>
+</td>
+<td><p>type</p></td>
+<td colspan="3"><p><em>string</em></p></td>
+</tr>
+<tr class="row-even"><td><ul class="simple">
+<li><p><strong>content</strong></p></li>
+</ul>
+</td>
+<td><p>type</p></td>
+<td colspan="3"><p><em>string</em></p></td>
+</tr>
+<tr class="row-odd"><td rowspan="2"><ul class="simple">
+<li><p><strong>tags</strong></p></li>
+</ul>
+</td>
+<td><p>type</p></td>
+<td colspan="3"><p><em>array</em></p></td>
+</tr>
+<tr class="row-even"><td><p>items</p></td>
+<td><p>anyOf</p></td>
+<td><p>type</p></td>
+<td><p><em>string</em></p></td>
+</tr>
+<tr class="row-odd"><td><ul class="simple">
+<li><p><strong>folderPathname</strong></p></li>
+</ul>
+</td>
+<td><p>type</p></td>
+<td colspan="3"><p><em>string</em></p></td>
+</tr>
+<tr class="row-even"><td><ul class="simple">
+<li><p><strong>data</strong></p></li>
+</ul>
+</td>
+<td><p>type</p></td>
+<td colspan="3"><p><em>object</em></p></td>
+</tr>
+<tr class="row-odd"><td><ul class="simple">
+<li><p><strong>createdAt</strong></p></li>
+</ul>
+</td>
+<td><p>type</p></td>
+<td colspan="3"><p><em>string</em></p></td>
+</tr>
+<tr class="row-even"><td><ul class="simple">
+<li><p><strong>updatedAt</strong></p></li>
+</ul>
+</td>
+<td><p>type</p></td>
+<td colspan="3"><p><em>string</em></p></td>
+</tr>
+<tr class="row-odd"><td><ul class="simple">
+<li><p><strong>trashed</strong></p></li>
+</ul>
+</td>
+<td><p>type</p></td>
+<td colspan="3"><p><em>boolean</em></p></td>
+</tr>
+<tr class="row-even"><td><ul class="simple">
+<li><p><strong>_rev</strong></p></li>
+</ul>
+</td>
+<td><p>type</p></td>
+<td colspan="3"><p><em>string</em></p></td>
+</tr>
+</tbody>
+</table>
+</section>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="legacy.html" class="btn btn-neutral float-left" title="Boost Note Legacy" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="../joplin/index.html" class="btn btn-neutral float-right" title="Joplin" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2022, Elliot Miller.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Joplin JEX File Format &mdash; Sovereign Note  documentation</title>
+      <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/doctools.js"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Obsidian" href="../obsidian/index.html" />
+    <link rel="prev" title="Joplin" href="index.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="../index.html" class="icon icon-home"> Sovereign Note
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../boostnote/index.html">Boost Note</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">Joplin</a><ul class="current">
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Joplin JEX File Format</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#file-hierarchy">File Hierarchy</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#example">Example</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#resource-files">Resource Files</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#general-resource-file-structure">General Resource File Structure</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#note">Note</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#folder">Folder</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../obsidian/index.html">Obsidian</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">Sovereign Note</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
+          <li><a href="index.html">Joplin</a> &raquo;</li>
+      <li>Joplin JEX File Format</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../_sources/joplin/jex.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="joplin-jex-file-format">
+<h1>Joplin JEX File Format<a class="headerlink" href="#joplin-jex-file-format" title="Permalink to this headline"></a></h1>
+<section id="file-hierarchy">
+<h2>File Hierarchy<a class="headerlink" href="#file-hierarchy" title="Permalink to this headline"></a></h2>
+<p>This document will describe the JEX file format, which is one of the export
+formats supported by Joplin.</p>
+<p>At a high-level, a JEX file is a <a class="reference external" href="https://en.wikipedia.org/w/index.php?oldid=1067325544">tarball</a> containing <em>notes</em> and
+<em>attachments</em>.</p>
+<p>The <em>notes</em> are all placed at the top level of the tarball.</p>
+<p>The <em>attachments</em> are placed under the “attachments” directory in the tarball.</p>
+<section id="example">
+<h3>Example<a class="headerlink" href="#example" title="Permalink to this headline"></a></h3>
+<p>For example, this is what the file hierarchy may look like inside a JEX file:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>.
+├── 0e1fe57d81ff26afea38.md
+├── 3edb302d6c6742df9e86b9c1c6ea3ec8.md
+├── 8449599a40df4146952119dd78ac9da5.md
+├── 9836727eda734191b4e281770565e494.md
+├── 994f8d784b2b3fc2cd04.md
+├── 9f132269d958068b11e0.md
+├── ae08726c53434f59a3d6bd0544381a1e.md
+├── d70facf23fba46e8a17202a7be3742c7.md
+└── resources
+    ├── 3edb302d6c6742df9e86b9c1c6ea3ec8.svg
+    └── 8449599a40df4146952119dd78ac9da5.png
+</pre></div>
+</div>
+</section>
+</section>
+<section id="resource-files">
+<h2>Resource Files<a class="headerlink" href="#resource-files" title="Permalink to this headline"></a></h2>
+<p>Each <em>resource</em> in a JEX file is represented as a single markdown file.</p>
+<p>There are 16 <em>resource</em> types:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">export</span> <span class="n">enum</span> <span class="n">ModelType</span> <span class="p">{</span>
+    <span class="n">Note</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span>
+    <span class="n">Folder</span> <span class="o">=</span> <span class="mi">2</span><span class="p">,</span>
+    <span class="n">Setting</span> <span class="o">=</span> <span class="mi">3</span><span class="p">,</span>
+    <span class="n">Resource</span> <span class="o">=</span> <span class="mi">4</span><span class="p">,</span>
+    <span class="n">Tag</span> <span class="o">=</span> <span class="mi">5</span><span class="p">,</span>
+    <span class="n">NoteTag</span> <span class="o">=</span> <span class="mi">6</span><span class="p">,</span>
+    <span class="n">Search</span> <span class="o">=</span> <span class="mi">7</span><span class="p">,</span>
+    <span class="n">Alarm</span> <span class="o">=</span> <span class="mi">8</span><span class="p">,</span>
+    <span class="n">MasterKey</span> <span class="o">=</span> <span class="mi">9</span><span class="p">,</span>
+    <span class="n">ItemChange</span> <span class="o">=</span> <span class="mi">10</span><span class="p">,</span>
+    <span class="n">NoteResource</span> <span class="o">=</span> <span class="mi">11</span><span class="p">,</span>
+    <span class="n">ResourceLocalState</span> <span class="o">=</span> <span class="mi">12</span><span class="p">,</span>
+    <span class="n">Revision</span> <span class="o">=</span> <span class="mi">13</span><span class="p">,</span>
+    <span class="n">Migration</span> <span class="o">=</span> <span class="mi">14</span><span class="p">,</span>
+    <span class="n">SmartFilter</span> <span class="o">=</span> <span class="mi">15</span><span class="p">,</span>
+    <span class="n">Command</span> <span class="o">=</span> <span class="mi">16</span><span class="p">,</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>(From the Joplin <a class="reference external" href="https://github.com/laurent22/joplin/blob/8e55fe31eecdb9772ab1df8f020669b406918269/packages/lib/BaseModel.ts#L10">ModelType</a> enum)</p>
+<section id="general-resource-file-structure">
+<h3>General Resource File Structure<a class="headerlink" href="#general-resource-file-structure" title="Permalink to this headline"></a></h3>
+<p>Each <em>resource</em> in a JEX file is represented as a single markdown file.</p>
+<p>The markdown file will have a <strong>body</strong> containing markdown (or other contents)
+followed by a newline followed by a number of <code class="docutils literal notranslate"><span class="pre">key:</span> <span class="pre">value</span></code> lines containing
+metadata for the resource.</p>
+</section>
+<section id="note">
+<h3>Note<a class="headerlink" href="#note" title="Permalink to this headline"></a></h3>
+<p>Here is an example of a serialized note within the JEX file:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">My</span> <span class="n">First</span> <span class="n">Note</span>
+
+<span class="c1"># My First Note</span>
+
+<span class="c1">## References</span>
+
+<span class="o">-</span> <span class="p">[</span><span class="n">My</span> <span class="n">First</span> <span class="n">Note</span><span class="p">](:</span><span class="o">/</span><span class="n">ae08726c53434f59a3d6bd0544381a1e</span><span class="p">)</span>
+<span class="o">-</span> <span class="p">[</span><span class="n">My</span> <span class="n">Second</span> <span class="n">Note</span><span class="p">](:</span><span class="o">/</span><span class="n">d70facf23fba46e8a17202a7be3742c7</span><span class="p">)</span>
+
+<span class="nb">id</span><span class="p">:</span> <span class="n">ae08726c53434f59a3d6bd0544381a1e</span>
+<span class="n">parent_id</span><span class="p">:</span> <span class="mi">9</span><span class="n">f132269d958068b11e0</span>
+<span class="n">created_time</span><span class="p">:</span> <span class="mi">2021</span><span class="o">-</span><span class="mi">10</span><span class="o">-</span><span class="mi">02</span><span class="n">T16</span><span class="p">:</span><span class="mi">38</span><span class="p">:</span><span class="mf">20.381000</span><span class="o">+</span><span class="mi">0000</span>
+<span class="n">updated_time</span><span class="p">:</span> <span class="mi">2021</span><span class="o">-</span><span class="mi">10</span><span class="o">-</span><span class="mi">02</span><span class="n">T16</span><span class="p">:</span><span class="mi">39</span><span class="p">:</span><span class="mf">17.579000</span><span class="o">+</span><span class="mi">0000</span>
+<span class="n">is_conflict</span><span class="p">:</span> <span class="mi">0</span>
+<span class="n">latitude</span><span class="p">:</span> <span class="mf">0.00000000</span>
+<span class="n">longitude</span><span class="p">:</span> <span class="mf">0.00000000</span>
+<span class="n">altitude</span><span class="p">:</span> <span class="mf">0.0000</span>
+<span class="n">author</span><span class="p">:</span>
+<span class="n">source_url</span><span class="p">:</span>
+<span class="n">is_todo</span><span class="p">:</span> <span class="mi">0</span>
+<span class="n">todo_due</span><span class="p">:</span> <span class="mi">0</span>
+<span class="n">todo_completed</span><span class="p">:</span> <span class="mi">0</span>
+<span class="n">source</span><span class="p">:</span> <span class="n">evernote</span>
+<span class="n">source_application</span><span class="p">:</span> <span class="n">net</span><span class="o">.</span><span class="n">cozic</span><span class="o">.</span><span class="n">joplin</span><span class="o">-</span><span class="n">desktop</span>
+<span class="n">application_data</span><span class="p">:</span>
+<span class="n">order</span><span class="p">:</span> <span class="mi">0</span>
+<span class="n">user_created_time</span><span class="p">:</span> <span class="mi">2021</span><span class="o">-</span><span class="mi">10</span><span class="o">-</span><span class="mi">02</span><span class="n">T16</span><span class="p">:</span><span class="mi">38</span><span class="p">:</span><span class="mf">20.381000</span><span class="o">+</span><span class="mi">0000</span>
+<span class="n">user_updated_time</span><span class="p">:</span> <span class="mi">2021</span><span class="o">-</span><span class="mi">10</span><span class="o">-</span><span class="mi">02</span><span class="n">T16</span><span class="p">:</span><span class="mi">38</span><span class="p">:</span><span class="mf">20.381000</span><span class="o">+</span><span class="mi">0000</span>
+<span class="n">encryption_cipher_text</span><span class="p">:</span>
+<span class="n">encryption_applied</span><span class="p">:</span> <span class="mi">0</span>
+<span class="n">markup_language</span><span class="p">:</span> <span class="mi">1</span>
+<span class="n">is_shared</span><span class="p">:</span> <span class="mi">0</span>
+<span class="n">share_id</span><span class="p">:</span>
+<span class="n">conflict_original_id</span><span class="p">:</span>
+<span class="n">type_</span><span class="p">:</span> <span class="mi">1</span>
+</pre></div>
+</div>
+<p>Note that the actual document you will see in the Joplin editor is this:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">My</span> <span class="n">First</span> <span class="n">Note</span>
+
+<span class="c1"># My First Note</span>
+
+<span class="c1">## References</span>
+
+<span class="o">-</span> <span class="p">[</span><span class="n">My</span> <span class="n">First</span> <span class="n">Note</span><span class="p">](:</span><span class="o">/</span><span class="n">ae08726c53434f59a3d6bd0544381a1e</span><span class="p">)</span>
+<span class="o">-</span> <span class="p">[</span><span class="n">My</span> <span class="n">Second</span> <span class="n">Note</span><span class="p">](:</span><span class="o">/</span><span class="n">d70facf23fba46e8a17202a7be3742c7</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>All other lines in the <em>resource</em> are metadata headers.</p>
+<p>Also, note that the special link <code class="docutils literal notranslate"><span class="pre">[My</span> <span class="pre">First</span>
+<span class="pre">Note](:/ae08726c53434f59a3d6bd0544381a1e)</span></code> points to another note in the JEX
+file with the id <code class="docutils literal notranslate"><span class="pre">ae08726c53434f59a3d6bd0544381a1e</span></code>.</p>
+</section>
+<section id="folder">
+<h3>Folder<a class="headerlink" href="#folder" title="Permalink to this headline"></a></h3>
+<p>Here is an example of a serialized folder within the JEX file:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">Folder</span> <span class="n">One</span>
+
+<span class="nb">id</span><span class="p">:</span> <span class="mi">9</span><span class="n">f132269d958068b11e0</span>
+<span class="n">created_time</span><span class="p">:</span> <span class="mi">2021</span><span class="o">-</span><span class="mi">08</span><span class="o">-</span><span class="mi">07</span><span class="n">T14</span><span class="p">:</span><span class="mi">51</span><span class="p">:</span><span class="mf">30.227</span><span class="n">Z</span>
+<span class="n">updated_time</span><span class="p">:</span> <span class="mi">2021</span><span class="o">-</span><span class="mi">08</span><span class="o">-</span><span class="mi">07</span><span class="n">T14</span><span class="p">:</span><span class="mi">51</span><span class="p">:</span><span class="mf">30.227</span><span class="n">Z</span>
+<span class="n">user_created_time</span><span class="p">:</span> <span class="mi">2021</span><span class="o">-</span><span class="mi">08</span><span class="o">-</span><span class="mi">07</span><span class="n">T14</span><span class="p">:</span><span class="mi">51</span><span class="p">:</span><span class="mf">30.227</span><span class="n">Z</span>
+<span class="n">user_updated_time</span><span class="p">:</span> <span class="mi">2021</span><span class="o">-</span><span class="mi">08</span><span class="o">-</span><span class="mi">07</span><span class="n">T14</span><span class="p">:</span><span class="mi">51</span><span class="p">:</span><span class="mf">30.227</span><span class="n">Z</span>
+<span class="n">encryption_cipher_text</span><span class="p">:</span>
+<span class="n">encryption_applied</span><span class="p">:</span> <span class="mi">0</span>
+<span class="n">parent_id</span><span class="p">:</span>
+<span class="n">is_shared</span><span class="p">:</span> <span class="mi">0</span>
+<span class="n">share_id</span><span class="p">:</span>
+</pre></div>
+</div>
+</section>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="index.html" class="btn btn-neutral float-left" title="Joplin" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="../obsidian/index.html" class="btn btn-neutral float-right" title="Obsidian" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2022, Elliot Miller.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

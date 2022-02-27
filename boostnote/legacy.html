@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Boost Note Legacy &mdash; Sovereign Note  documentation</title>
+      <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/doctools.js"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Boost Note Next Local" href="next-local.html" />
+    <link rel="prev" title="Boost Note" href="index.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="../index.html" class="icon icon-home"> Sovereign Note
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">Boost Note</a><ul class="current">
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Boost Note Legacy</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#abstract">Abstract</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#definitions">Definitions</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#file-hierarchy">File Hierarchy</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#boostnote-json-specification">Boostnote.json Specification</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#boostnote-collection-metadata-file">Boostnote Collection Metadata File</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#boostnote-flavored-markdown">Boostnote-Flavored Markdown</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#section-hyperlinks">Section Hyperlinks</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#hyperlinks-between-notes">Hyperlinks Between Notes</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="next-local.html">Boost Note Next Local</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../joplin/index.html">Joplin</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../obsidian/index.html">Obsidian</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">Sovereign Note</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
+          <li><a href="index.html">Boost Note</a> &raquo;</li>
+      <li>Boost Note Legacy</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../_sources/boostnote/legacy.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="boost-note-legacy">
+<h1>Boost Note Legacy<a class="headerlink" href="#boost-note-legacy" title="Permalink to this headline"></a></h1>
+<section id="abstract">
+<h2>Abstract<a class="headerlink" href="#abstract" title="Permalink to this headline"></a></h2>
+<p>This document describes the structure of a legacy Boostnote collection.</p>
+</section>
+<section id="definitions">
+<h2>Definitions<a class="headerlink" href="#definitions" title="Permalink to this headline"></a></h2>
+<ul class="simple">
+<li><p>Legacy Boostnote: Boostnote version v0.16.1 and lower, corresponding to [this repo](<a class="reference external" href="https://github.com/BoostIO/BoostNote-Legacy">https://github.com/BoostIO/BoostNote-Legacy</a>)</p></li>
+<li><p>Boostnote collection: The directory containing boostnote.json, notes, and attachments. Abstractly, this is all data associated with a single boostnote.json metadata file.</p></li>
+<li><p>Base directory: The direct parent directory of boostnote.json.</p></li>
+</ul>
+</section>
+<section id="file-hierarchy">
+<h2>File Hierarchy<a class="headerlink" href="#file-hierarchy" title="Permalink to this headline"></a></h2>
+<p>The Boost Note directory will have one metadata file called “boostnote.json”.</p>
+<p>The Boost Note directory will have two subdirectories named “attachments” and “notes”.</p>
+<p>The “notes” directory will contain one <strong>CSON</strong> file for each note in your collection.</p>
+<p>For example, your Boost Note directory may look like this:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>.
+├── attachments
+│   └── 9836727e-da73-4191-b4e2-81770565e494
+│       ├── 25c981e1.svg
+│       └── 6ea0d43d.png
+├── boostnote.json
+└── notes
+    ├── 9836727e-da73-4191-b4e2-81770565e494.cson
+    ├── ae08726c-5343-4f59-a3d6-bd0544381a1e.cson
+    └── d70facf2-3fba-46e8-a172-02a7be3742c7.cson
+</pre></div>
+</div>
+</section>
+<section id="boostnote-json-specification">
+<h2>Boostnote.json Specification<a class="headerlink" href="#boostnote-json-specification" title="Permalink to this headline"></a></h2>
+<section id="boostnote-collection-metadata-file">
+<span id="boostnote-collection-metadata-file"></span><h3>Boostnote Collection Metadata File<a class="headerlink" href="#boostnote-collection-metadata-file" title="Permalink to this headline"></a></h3>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 33%" />
+<col style="width: 33%" />
+<col style="width: 33%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td colspan="3"><p>Schema for boostnote.json file</p></td>
+</tr>
+<tr class="row-even"><td><p>type</p></td>
+<td colspan="2"><p><em>object</em></p></td>
+</tr>
+<tr class="row-odd"><td colspan="3"><p>properties</p></td>
+</tr>
+<tr class="row-even"><td rowspan="2"><ul class="simple">
+<li><p><strong>folders</strong></p></li>
+</ul>
+</td>
+<td><p>type</p></td>
+<td><p><em>array</em></p></td>
+</tr>
+<tr class="row-odd"><td><p>items</p></td>
+<td><p><a class="reference internal" href="#folder">folder</a></p></td>
+</tr>
+<tr class="row-even"><td rowspan="3"><ul class="simple">
+<li><p><strong>version</strong></p></li>
+</ul>
+</td>
+<td colspan="2"><p>In practice, this is always 1.0</p></td>
+</tr>
+<tr class="row-odd"><td><p>type</p></td>
+<td><p><em>string</em></p></td>
+</tr>
+<tr class="row-even"><td><p>examples</p></td>
+<td><p>1.0</p></td>
+</tr>
+</tbody>
+</table>
+<section id="folder">
+<span id="folder"></span><h4>folder<a class="headerlink" href="#folder" title="Permalink to this headline"></a></h4>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 33%" />
+<col style="width: 33%" />
+<col style="width: 33%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p>type</p></td>
+<td colspan="2"><p><em>object</em></p></td>
+</tr>
+<tr class="row-even"><td colspan="3"><p>properties</p></td>
+</tr>
+<tr class="row-odd"><td rowspan="4"><ul class="simple">
+<li><p><strong>key</strong></p></li>
+</ul>
+</td>
+<td><p>type</p></td>
+<td><p><em>string</em></p></td>
+</tr>
+<tr class="row-even"><td rowspan="3"><p>examples</p></td>
+<td><p>9f132269d958068b11e0</p></td>
+</tr>
+<tr class="row-odd"><td><p>994f8d784b2b3fc2cd04</p></td>
+</tr>
+<tr class="row-even"><td><p>0e1fe57d81ff26afea38</p></td>
+</tr>
+<tr class="row-odd"><td rowspan="4"><ul class="simple">
+<li><p><strong>color</strong></p></li>
+</ul>
+</td>
+<td><p>type</p></td>
+<td><p><em>string</em></p></td>
+</tr>
+<tr class="row-even"><td rowspan="3"><p>examples</p></td>
+<td><p>#3FD941</p></td>
+</tr>
+<tr class="row-odd"><td><p>#30D5C8</p></td>
+</tr>
+<tr class="row-even"><td><p>#E8D252</p></td>
+</tr>
+<tr class="row-odd"><td rowspan="4"><ul class="simple">
+<li><p><strong>name</strong></p></li>
+</ul>
+</td>
+<td><p>type</p></td>
+<td><p><em>string</em></p></td>
+</tr>
+<tr class="row-even"><td rowspan="3"><p>examples</p></td>
+<td><p>Folder One</p></td>
+</tr>
+<tr class="row-odd"><td><p>Folder Two</p></td>
+</tr>
+<tr class="row-even"><td><p>Special 123 !&#64;#$%^&amp;*()_+-=`~ Folder</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+</section>
+</section>
+<section id="boostnote-flavored-markdown">
+<h2>Boostnote-Flavored Markdown<a class="headerlink" href="#boostnote-flavored-markdown" title="Permalink to this headline"></a></h2>
+<section id="section-hyperlinks">
+<h3>Section Hyperlinks<a class="headerlink" href="#section-hyperlinks" title="Permalink to this headline"></a></h3>
+<p>Boostnote automatically adds <code class="docutils literal notranslate"><span class="pre">id</span></code> attributes to headers generated via the <code class="docutils literal notranslate"><span class="pre">#</span></code> markdown syntax.</p>
+<p>However, some characters are dropped from the <code class="docutils literal notranslate"><span class="pre">id</span></code> attribute (example characters: <code class="docutils literal notranslate"><span class="pre">!&#64;#$%^&amp;*(-_=+</span></code>).</p>
+</section>
+<section id="hyperlinks-between-notes">
+<h3>Hyperlinks Between Notes<a class="headerlink" href="#hyperlinks-between-notes" title="Permalink to this headline"></a></h3>
+<p>Represented by a <code class="docutils literal notranslate"><span class="pre">[text](:/BOOSTNOTE_ID)</span></code> markdown tag, where <code class="docutils literal notranslate"><span class="pre">BOOSTNOTE_ID</span></code> is replaced with the Boostnote note ID</p>
+</section>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="index.html" class="btn btn-neutral float-left" title="Boost Note" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="next-local.html" class="btn btn-neutral float-right" title="Boost Note Next Local" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2022, Elliot Miller.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

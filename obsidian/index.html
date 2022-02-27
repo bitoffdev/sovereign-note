@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Obsidian &mdash; Sovereign Note  documentation</title>
+      <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/doctools.js"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="prev" title="Joplin JEX File Format" href="../joplin/jex.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="../index.html" class="icon icon-home"> Sovereign Note
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../boostnote/index.html">Boost Note</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../joplin/index.html">Joplin</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Obsidian</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#glossary">Glossary</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#obsidian-vault">Obsidian Vault</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#dot-obsidian-directory">Dot Obsidian Directory</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#workspace-file">Workspace File</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#features">Features</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#obsidian-schema-links">Obsidian Schema Links</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#links-between-notes">Links Between Notes</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#image-attachments">Image Attachments</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">Sovereign Note</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
+      <li>Obsidian</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../_sources/obsidian/index.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="obsidian">
+<h1>Obsidian<a class="headerlink" href="#obsidian" title="Permalink to this headline"></a></h1>
+<ul class="simple">
+<li><p>Webpage: <a class="reference external" href="https://obsidian.md/">Obsidian.md</a></p></li>
+</ul>
+<section id="glossary">
+<h2>Glossary<a class="headerlink" href="#glossary" title="Permalink to this headline"></a></h2>
+<ul class="simple">
+<li><p><strong>Vault</strong>: Term used by Obsidian for a collection of notes.
+- This is equivalent to a Boost Note “Space”.</p></li>
+</ul>
+</section>
+<section id="obsidian-vault">
+<h2>Obsidian Vault<a class="headerlink" href="#obsidian-vault" title="Permalink to this headline"></a></h2>
+<p>An Obsidian <strong>vault</strong> is the term used by Obsidian for a <em>collection of notes</em>.</p>
+<p>An Obsidian <em>vault</em> contains markdown files and attachments like images.</p>
+<p>Unlike Boost Note, markdown notes are named according to the title of the note rather than a generated ID (like a UUID).</p>
+<p>Each Obsidian <em>vault</em> has a directory named <code class="docutils literal notranslate"><span class="pre">.obsidian</span></code> containing metadata about the vault.</p>
+</section>
+<section id="dot-obsidian-directory">
+<h2>Dot Obsidian Directory<a class="headerlink" href="#dot-obsidian-directory" title="Permalink to this headline"></a></h2>
+<p>This section will describe the <code class="docutils literal notranslate"><span class="pre">.obsidian</span></code> directory inside each <em>vault</em>.</p>
+<section id="workspace-file">
+<h3>Workspace File<a class="headerlink" href="#workspace-file" title="Permalink to this headline"></a></h3>
+<p>Within the <cite>.obsidian</cite> directory will be a file called <cite>workspace</cite> containing information about the notes in the <em>vault</em>. It stores this information as JSON.</p>
+</section>
+</section>
+<section id="features">
+<h2>Features<a class="headerlink" href="#features" title="Permalink to this headline"></a></h2>
+<section id="obsidian-schema-links">
+<h3>Obsidian Schema Links<a class="headerlink" href="#obsidian-schema-links" title="Permalink to this headline"></a></h3>
+<p><em>These should not be used to link between notes.</em> Obsidian will not recognize these links when generating the link graph (as of Obsidian 0.13.23).</p>
+<p>The <em>context menu</em> of each note (accessed by right-clicking a note in the sidebar) includes an option to “Copy Obsidian URL”.</p>
+<p>Interestingly, this is a less-abusive way of doing links between notes than the way Boost Note and Joplin do it. However, it may require some additional configuration, ie. you may need to register the Obisdian application with your Operating System to handle the <cite>obsidian://</cite> URI schema.</p>
+<p>These links take the form <code class="docutils literal notranslate"><span class="pre">obsidian://open?vault=VAULT_NAME&amp;file=RELATIVE_NOTE_PATH_WITHOUT_EXTENSION</span></code>.</p>
+<p>In the above:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">VAULT_NAME</span></code> and <code class="docutils literal notranslate"><span class="pre">RELATIVE_NOTE_PATH_WITHOUT_EXTENSION</span></code> are both URI-escaped</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">RELATIVE_NOTE_PATH_WITHOUT_EXTENSION</span></code> may be nested within sub-directories</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">VAULT_NAME</span></code> is a little awkward because:
+- It is based on the parent directory of your notes rather than any other metadata.
+- You could have two <a href="#id1"><span class="problematic" id="id2">*</span></a>vault*s on the same computer with the same parent directory name. This forces Obsidian to arbitrarily choose one of the vaults.</p></li>
+</ul>
+</section>
+<section id="links-between-notes">
+<h3>Links Between Notes<a class="headerlink" href="#links-between-notes" title="Permalink to this headline"></a></h3>
+<p><em>Internal links</em> use the <code class="docutils literal notranslate"><span class="pre">[[NOTE_NAME]]</span></code> syntax, which is custom to Obsidian.</p>
+<p><strong>Renaming Notes</strong></p>
+<p>Obsidian will automatically update all backlinks with the <code class="docutils literal notranslate"><span class="pre">[[NOTE_NAME]]</span></code> syntax if you rename a note.</p>
+</section>
+<section id="image-attachments">
+<h3>Image Attachments<a class="headerlink" href="#image-attachments" title="Permalink to this headline"></a></h3>
+<p>Image attachments are dumped into the same directory as the notes in Obsidian. They are not treated specially.</p>
+<p>However, Obsidian uses a special link syntax for images that does not work in all other editors. If you drag-and-drop an image into Obsidian, it will represent the image with double-square-bracket-notation: <code class="docutils literal notranslate"><span class="pre">![[image-path.png]]</span></code>.</p>
+</section>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="../joplin/jex.html" class="btn btn-neutral float-left" title="Joplin JEX File Format" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2022, Elliot Miller.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

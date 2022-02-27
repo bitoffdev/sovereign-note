@@ -32,3 +32,4 @@ apps use to store notes.
 
     boostnote/index
     joplin/index
+    obsidian/index
